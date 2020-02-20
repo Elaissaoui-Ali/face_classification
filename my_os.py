@@ -22,17 +22,18 @@ class Folder:
     def get_pictures(self):
         files = filter(lambda f: os.path.splitext(f)[1].lower() in Picture.ImgExt,
                        os.listdir(self.absolute_path))
-        return list(map(lambda pic: Picture(self.absolute_path + "\\" + pic), files))
+        return list(map(lambda pic: Picture(self.absolute_path + "/" + pic), files))
 
     def create_folders(self, list_of_names):
         for name in list_of_names:
             try:
-                os.mkdir("{}\\{}".format(self.absolute_path, name))
+                os.mkdir("{}/{}".format(self.absolute_path, name))
             except FileExistsError:
                 print("folder is already exist !!")
 
     def group_in_folders(self, dict_list):
-        self.create_folders(list(map(lambda i: i["folder"], dict_list)))
+        self.create_folders(list(map(lambda item: item["folder"], dict_list)))
+
         condition = True
         for item in dict_list:
             for file in item["files"]:
